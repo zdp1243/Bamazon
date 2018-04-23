@@ -1,3 +1,4 @@
+//Dependencies
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const cliTable = require("cli-table");
@@ -9,8 +10,6 @@ var connection = mysql.createConnection({
     password: "HyacinthusDionysus7219!!",
     database: "bamazon_DB"
 });
-
-var itemPurchased = [];
 
 // Connect to mysql server database
 connection.connect(function (err) {
@@ -46,7 +45,7 @@ console.log(table.toString());
 
 purchase();
 
-//Validate Customer is Entering Only Positive Integers
+//Validate customer is entering only positive integers
 function validateInput(value) {
     var integer = Number.isInteger(parseFloat(value));
     var sign = Math.sign(value);
@@ -58,6 +57,35 @@ function validateInput(value) {
     }
 }
 
+//initialPrompt asks for item/quantity for purchase.
+function initialPrompt() {
+    console.log('Enter initialPrompt');
+
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'item_id',
+                message: 'Please enter the ID# of the item you wish to purchase.',
+                validate: validateInput,
+                filter: Number
+            },
+            {
+                type: 'input',
+                name: 'stock_quantity',
+                message: 'Please enter the quantity you wish to purchase.',
+                validate: validateInput,
+                filter: Number
+            }
+        ]).then(function (input) {
+            console.log("Customer selected: \n item_id = " + input.item_id + "\n, quantity =" + input.quantity);
+
+            var item = input.item_id;
+            var quantity = input.stock_quantity;
+
+        }
+        )
+}
 //Purchase function
 //Write function that decrements units as orders are filled.
 //Need function that refills stock?
@@ -99,6 +127,7 @@ console.log("This is not a valid command.");
 //Y should loop back to id# prompt, N should log "Have a nice day. Please come again! :-)"
 
 // function which prompts the user for what action they should take
+//var itemPurchased = [];
 function start() {
     inquirer
         .prompt({
