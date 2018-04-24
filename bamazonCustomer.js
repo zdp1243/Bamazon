@@ -11,40 +11,6 @@ var connection = mysql.createConnection({
     database: "bamazon_DB"
 });
 
-// Connect to mysql server database
-connection.connect(function (err) {
-    if (err) throw err;
-    // Run start function after the connection to prompt the user.
-    start();
-});
-
-//Create table to put info from mySQL
-var table = new cliTable({
-
-    head:
-        ['item_id',
-            'product_name',
-            'department_name',
-            'price',
-            'stock_quantity'
-        ],
-    style: {
-        compact: false,
-        colAligns: ['center'],
-    }
-});
-
-// Loop through items in mySQL database and push into new row in table.
-for (var i = 0; i < result.length; i++) {
-    table.push(
-        [result[i].item_id, result[i].product_name, result[i].department_name, result[i].price, result[i].stock_quantity]
-    );
-}
-console.log(table);
-console.log(table.toString());
-
-purchase();
-
 //Validate customer is entering only positive integers
 function validateInput(value) {
     var integer = Number.isInteger(parseFloat(value));
@@ -59,8 +25,7 @@ function validateInput(value) {
 
 //initialPrompt asks for item/quantity for purchase.
 function initialPrompt() {
-    console.log('Enter initialPrompt');
-
+    // console.log('Enter initialPrompt');
     inquirer
         .prompt([
             {
@@ -76,32 +41,43 @@ function initialPrompt() {
                 message: 'Please enter the quantity you wish to purchase.',
                 validate: validateInput,
                 filter: Number
-            }
+            },
+            // {
+            //     type: 'confirm',
+            //     name: 'sufficient_stock_quantity',
+            //     message: 'Product requested is in stock. Your total is $' + (productData.price * quantity) + '. Place order?)',
+            //     filter: Boolean
+            // },
+
+
         ]).then(function (input) {
-            console.log("Customer selected: \n item_id = " + input.item_id + "\n, quantity =" + input.quantity);
+            // console.log("Customer selected: \n item_id = " + input.item_id + "\n, quantity =" + input.stock_quantity);
 
             var item = input.item_id;
             var quantity = input.stock_quantity;
+
             //Query bamazon_db to confirm ID# exists in selected quantity.
             var queryStr = 'SELECT * FROM products WHERE?';
 
             connection.query(queryStr, { item_id: item }, function (err, data) {
-                if (err) throw err;
-                //If user selects invalid ID#, data array will be empty.
-                console.log('ERROR: Invalid ID#.');
+                if (err) {
+                    throw err;
+                    //If user selects invalid ID#, data array will be empty.
+                    console.log('ERROR: Invalid ID#.');
 
-                displayInventory();
+                    displayInventory();
 
-            } else
-                {
-                    var productData = data[0],
-                    console.log('productData = ' + JSON.stringify(productData));
-                    console.log('productData.stock_quantity= ' + productData.stock_quantity);
+                } else {
+                    var productData = data[0];
+                    //  console.log('productData = ' + JSON.stringify(productData));
+                    //  console.log('productData.stock_quantity= ' + productData.stock_quantity);
 
                     //Quantity entered is in stock
-                    if(quantity < = productData.stock_quantity) {
+                    if (quantity <= productData.stock_quantity) {
                         console.log('Product requested is in stock. Your total is $' + (productData.price * quantity) + '. Placing order.');
-                        //Update Inventory
+                        //OR inquirer prompt[2].
+                        //Update Inventory??? i-- THIS IS WHERE IT STOPS WORKING, It also doesn't clear answers.
+                        // var updateQueryStr = 'SELECT stock_quantity FROM products WHERE?'
                         connection.query(updateQueryStr, function (err, data) {
                             if (err) throw err;
                             console.log('Your order has been placed.  Thank you!');
@@ -110,45 +86,57 @@ function initialPrompt() {
                         })
                     } else {
                         console.log('Insufficient inventory.  Please modify quantity.');
-
+                        //Redisplay 
                         displayInventory();
                     }
                 }
             })
-})
-    }
+        })
+}
 
 function displayInventory() {
-    console.log('Enter displayInventory');
+    //Create table to put info from mySQL
+    var table = new cliTable({
+
+        head:
+            ['item_id',
+                'product_name',
+                'department_name',
+                'price',
+                'stock_quantity'
+            ],
+        style: {
+            compact: false,
+            colAligns: ['center'],
+        }
+    });
+
     queryStr = 'SELECT * FROM products';
-    connection.query(queryStr, function (err, data) {
+    connection.query(queryStr, function (err, result) {
         if (err) throw err;
-        console.log('Existing Inventory:  ');
-
-        var strOut = '';
-        for (var i = 0; i < data.length; 1++) {
-            strOut = '';
-            strOut += 'Item ID:  ' + data[i].item_id + ' // ';
-            strOut += 'Product Name:  ' + data[i].product_name + ' // ';
-            strOut += 'Department:  ' + data[i].department_name + ' // ';
-            strOut += 'Price: $' + data[i].data.price + ' // ';
-            strOut += 'Available Quantity: ' + data[i].data.stock_quantity + ' // ';
-
-            console.log(strOut);
-
-            //Prompt quantity of item for purchase
-
-            promtUserPurchase();
+        // console.log('Existing Inventory:  ');
+        // Loop through items in mySQL database and push into new row in table.
+        for (var i = 0; i < result.length; i++) {
+            table.push(
+                [result[i].item_id, result[i].product_name, result[i].department_name, result[i].price, result[i].stock_quantity]
+            );
         }
-    }
-            //runBamazon will run logic
-            function runBamazon() {
-            console.log('Enter runBamazon');
-            displayInventory();
-        }
-            runBamazon();
+        console.log(table.toString());
+        initialPrompt();
+    });
+
+    // updateQueryStr
 
 }
+
+//runBamazon will run logic
+function runBamazon() {
+    //  console.log('Enter runBamazon');
+    displayInventory();
+}
+runBamazon();
+
+
 
 
 
