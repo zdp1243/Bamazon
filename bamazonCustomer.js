@@ -26,6 +26,7 @@ function validateInput(value) {
 //initialPrompt asks for item/quantity for purchase.
 function initialPrompt() {
     // console.log('Enter initialPrompt');
+
     inquirer
         .prompt([
             {
@@ -62,10 +63,15 @@ function initialPrompt() {
             connection.query(queryStr, { item_id: item }, function (err, data) {
                 if (err) {
                     throw err;
-                    //If user selects invalid ID#, data array will be empty.
-                    console.log('ERROR: Invalid ID#.');
+                    console.log('data =  ' + JSON.stringify(data));
+                    //If user selects invalid ID#, data array will be empty.NOT THROWING ERROR!
 
-                    displayInventory();
+                    if (data.length === 0) {
+
+                        console.log('ERROR: Invalid ID#.');
+
+                        displayInventory();
+                    }
 
                 } else {
                     var productData = data[0];
@@ -76,17 +82,23 @@ function initialPrompt() {
                     if (quantity <= productData.stock_quantity) {
                         console.log('Product requested is in stock. Your total is $' + (productData.price * quantity) + '. Placing order.');
                         //OR inquirer prompt[2].
-                        //Update Inventory??? i-- THIS IS WHERE IT STOPS WORKING, It also doesn't clear answers.
-                        // var updateQueryStr = 'SELECT stock_quantity FROM products WHERE?'
+
+                        //Update inventory after purchase 
+                        var updateQueryStr = 'UPDATE products SET stock_quantity =  ' + (productData.stock_quantity - quantity);
+                        console.log('updateQueryStr =  ' + updateQueryStr);
+
+
                         connection.query(updateQueryStr, function (err, data) {
                             if (err) throw err;
                             console.log('Your order has been placed.  Thank you!');
-                            //End Connection
+
+                            //End Database Connection
                             connection.end();
                         })
+
                     } else {
                         console.log('Insufficient inventory.  Please modify quantity.');
-                        //Redisplay 
+
                         displayInventory();
                     }
                 }
@@ -126,6 +138,21 @@ function displayInventory() {
     });
 
     // updateQueryStr
+    updateQueryStr = new queryStr
+
+    connection.query(queryStr, function (err, result) {
+        if (err) throw err;
+        // console.log('Existing Inventory:  ');
+        // Loop through items in mySQL database and push into new row in table.
+        for (var i = 0; i < result.length; i--) {
+            table.push(
+                [result[i].stock_quantity]
+            );
+        }
+        console.log(table.toString());
+        initialPrompt();
+    });
+
 
 }
 

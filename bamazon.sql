@@ -23,7 +23,7 @@ stock_quantity INTEGER (200),
   );
 
   INSERT INTO Products (item_id, product_name, department_name, price, stock_quantity)
-  VALUES (123456, "German Kaffee Mug", "Housewares", 10.99, 4), (678910, "German Tee Mug","Housewares", 10.99), (198765, "Portmeirion Prisoner Mug--Be Seeing You", 25.00),
-  (54321, "Portmeirion French Coffee Press", "Housewares", 50.00), (132465, "Denby Espresso Cup", "Housewares", 25.50), (243546, "Denby Tea Mug", "Housewares", 30.00), (576801, "Scraffito Coffee Pot", "Housewares", 100.00),
-  (089756, "Portmeirion Talisman Coffee Pot", "Housewares", 50.00), (102938, "Portmeirion Coffee Set (20pc)", "Housewares", 50.00),
-  (675849, "Denby Cappuccino Cup", "Housewares",35.00);
+  VALUES (123456, "German Kaffee Mug", "Housewares", 10.99, 4), (678910, "German Tee Mug","Housewares", 10.99, 3), (198765, "Portmeirion Prisoner Mug--Be Seeing You", 25.00, 5),
+  (54321, "Portmeirion French Coffee Press", "Housewares", 50.00, 7), (132465, "Denby Espresso Cup", "Housewares", 25.50, 6), (243546, "Denby Tea Mug", "Housewares", 30.00, 10), (576801, "Scraffito Coffee Pot", "Housewares", 100.00, 8),
+  (089756, "Portmeirion Talisman Coffee Pot", "Housewares", 50.00, 7), (102938, "Portmeirion Coffee Set (20pc)", "Housewares", 50.00, 9),
+  (675849, "Denby Cappuccino Cup", "Housewares",35.00, 10);
