@@ -138,20 +138,20 @@ function displayInventory() {
     });
 
     // updateQueryStr
-    updateQueryStr = new queryStr
+    // updateQueryStr = new queryStr
 
-    connection.query(queryStr, function (err, result) {
-        if (err) throw err;
-        // console.log('Existing Inventory:  ');
-        // Loop through items in mySQL database and push into new row in table.
-        for (var i = 0; i < result.length; i--) {
-            table.push(
-                [result[i].stock_quantity]
-            );
-        }
-        console.log(table.toString());
-        initialPrompt();
-    });
+    // connection.query(queryStr, function (err, result) {
+    //     if (err) throw err;
+    //     // console.log('Existing Inventory:  ');
+    //     // Loop through items in mySQL database and push into new row in table.
+    //     for (var i = 0; i < result.length; i--) {
+    //         table.push(
+    //             [result[i].stock_quantity]
+    //         );
+    //     }
+    //     console.log(table.toString());
+    //     initialPrompt();
+    // });
 
 
 }
