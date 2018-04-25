@@ -89,7 +89,7 @@ function initialPrompt() {
 
                         //Update inventory after purchase 
                         var updateQueryStr = 'UPDATE products SET stock_quantity =  ' + (productData.stock_quantity - quantity) + ' WHERE item_id = ' + input.item_id;
-                        console.log('updateQueryStr =  ' + updateQueryStr);
+                        // console.log('updateQueryStr =  ' + updateQueryStr);
 
 
                         connection.query(updateQueryStr, function (err, data) {
