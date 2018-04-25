@@ -61,17 +61,21 @@ function initialPrompt() {
             var queryStr = 'SELECT * FROM products WHERE?';
 
             connection.query(queryStr, { item_id: item }, function (err, data) {
+                if (data.length === 0) {
+
+                    console.log('ERROR: Invalid ID#.');
+                }
                 if (err) {
                     throw err;
                     console.log('data =  ' + JSON.stringify(data));
-                    //If user selects invalid ID#, data array will be empty.NOT THROWING ERROR!
+                    // If user selects invalid ID#, data array will be empty.NOT THROWING ERROR!
 
-                    if (data.length === 0) {
+                    // if (data.length === 0) {
 
-                        console.log('ERROR: Invalid ID#.');
+                    //     console.log('ERROR: Invalid ID#.');
 
-                        displayInventory();
-                    }
+                    displayInventory();
+                    // }
 
                 } else {
                     var productData = data[0];
@@ -84,7 +88,7 @@ function initialPrompt() {
                         //OR inquirer prompt[2].
 
                         //Update inventory after purchase 
-                        var updateQueryStr = 'UPDATE products SET stock_quantity =  ' + (productData.stock_quantity - quantity);
+                        var updateQueryStr = 'UPDATE products SET stock_quantity =  ' + (productData.stock_quantity - quantity) + ' WHERE item_id = ' + input.item_id;
                         console.log('updateQueryStr =  ' + updateQueryStr);
 
 
@@ -136,24 +140,6 @@ function displayInventory() {
         console.log(table.toString());
         initialPrompt();
     });
-
-    // updateQueryStr
-    // updateQueryStr = new queryStr
-
-    // connection.query(queryStr, function (err, result) {
-    //     if (err) throw err;
-    //     // console.log('Existing Inventory:  ');
-    //     // Loop through items in mySQL database and push into new row in table.
-    //     for (var i = 0; i < result.length; i--) {
-    //         table.push(
-    //             [result[i].stock_quantity]
-    //         );
-    //     }
-    //     console.log(table.toString());
-    //     initialPrompt();
-    // });
-
-
 }
 
 //runBamazon will run logic
