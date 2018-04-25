@@ -1,7 +1,8 @@
-# Bamazon
-##An Amazon-like storefront with MySQL
+Bamazon
 
-##Synopsis
+An Amazon-like storefront with MySQL
+
+Synopsis
 
 Bamazon is an interactive node app.  MySQL and Node.js are used in conjunction to create an inventory of items that may be selected for purchase by the user.  
 
@@ -11,7 +12,7 @@ This will list the current inventory in a table.  The user will be prompted to e
 
 
 
- ![User prompts](/images/https://zdp1243.github.io/Bamazon/2018-04-25(1).png)
+ ![User prompts](/images/../2018-04-25(1).png)
  
  
  
@@ -19,7 +20,7 @@ This will list the current inventory in a table.  The user will be prompted to e
  
  
  
- ![Insufficient quantities](/images/https://zdp1243.github.io/Bamazon/2018-04-25(2).png)
+ ![Insufficient quantities](../2018-04-25(2).png)
  
  
  
@@ -29,7 +30,7 @@ This will list the current inventory in a table.  The user will be prompted to e
  
  
  
- ![Incorrect Item Id](/images/https://zdp1243.github.io/Bamazon/2018-04-25(3).png)
+ ![Incorrect Item Id](../2018-04-25(3).png)
  
  
  
