@@ -1,6 +1,6 @@
-#Bamazon
+# Bamazon
 
-##An Amazon-like storefront with MySQL
+## An Amazon-like storefront with MySQL
 
 Synopsis
 
@@ -12,7 +12,7 @@ This will list the current inventory in a table.  The user will be prompted to e
 
 
 
- ![User prompts](/images/../2018-04-25(1).png)
+ ![User prompts](https://github.com/zdp1243/Bamazon/blob/master/Images/2018-04-25%20(1).png)
  
  
  
@@ -20,17 +20,7 @@ This will list the current inventory in a table.  The user will be prompted to e
  
  
  
- ![Insufficient quantities](../2018-04-25(2).png)
- 
- 
- 
- 
- 
- 
- 
- 
- 
- ![Incorrect Item Id](../2018-04-25(3).png)
+ ![Insufficient quantities](https://github.com/zdp1243/Bamazon/blob/master/Images/2018-04-25%20(2).png)
  
  
  
@@ -40,20 +30,30 @@ This will list the current inventory in a table.  The user will be prompted to e
  
  
  
+ ![Incorrect Item Id](https://github.com/zdp1243/Bamazon/blob/master/Images/2018-04-25.png)
  
  
- ##Technologies Used
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ ## Technologies Used
  
  Javascript
  Node.js
  MySQL
  npm packages:
- *mysql
- *inquirer
- *cli-table
+ * mysql
+ * inquirer
+ * cli-table
  
  
- ##Contributer:  J J Power  
+ ## Contributer:  J J Power  
  
  
 
